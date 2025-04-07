@@ -8,7 +8,8 @@
     "dev-alt": "vite --host 127.0.0.1 --port 3000",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "vite preview --host 0.0.0.0 --port $PORT"
+    "start": "vite preview --host 0.0.0.0 --port $PORT",
+    "postinstall": "chmod +x ./node_modules/.bin/vite"
   },
   "dependencies": {
     "react": "^18.2.0",
