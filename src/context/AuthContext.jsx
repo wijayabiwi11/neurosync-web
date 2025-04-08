@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 const AuthContext = createContext(null);
 
@@ -20,7 +21,20 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = (token, userData) => {
+  const register = async (email, password, username) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/register', {
+        email,
+        password,
+        username
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message || 'Registration failed');
+    }
+  };
+
+  const login = async (token, userData) => {
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(userData));
     setIsAuthenticated(true);
@@ -43,7 +57,8 @@ export const AuthProvider = ({ children }) => {
       isAuthenticated,
       user,
       login,
-      logout
+      logout,
+      register
     }}>
       {children}
     </AuthContext.Provider>
